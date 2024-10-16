@@ -6,10 +6,11 @@ import {
   signInSuccess,
   signInFailure
 } from '../redux/user/userSlice'
+import OAuth from '../components/OAuth';
 
 export default function SignIn() {
   const [formData, setFormData] = useState({});
-  const { error, loading } =  useSelector((state) => state.user)
+  const { error, loading } = useSelector((state) => state.user)
   const navigate = useNavigate()
   const dispatch = useDispatch();
 
@@ -47,9 +48,9 @@ export default function SignIn() {
       <h1 className="text-3xl text-center font-semibold uppercase text-slate-800 my-7">Sign up</h1>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <input
-          type="text"
-          placeholder="Username"
-          id="username"
+          type="email"
+          placeholder="Email"
+          id="email"
           className="border p-3 rounded-lg"
           onChange={handleChange}
         />
@@ -64,6 +65,7 @@ export default function SignIn() {
         <button disabled={loading} className="bg-slate-700 uppercase text-white font-semibold p-3 rounded-lg hover:opacity-95 disabled:opacity-80">
           {loading ? 'Loding...' : 'signin'}
         </button>
+        <OAuth />
       </form>
       <div className='flex gap-2 my-5'>
         <p>New User? </p>
