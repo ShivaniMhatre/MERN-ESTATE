@@ -25,7 +25,7 @@ function App() {
           <Route element={<PrivateRoute />}>
             <Route path='/profile' element={<Profile />} />
             <Route path='/createListing' element={<CreateListing />} />
-            <Route path='/listing/:id' element={<Listing />} />
+            <Route path='/listing/:listingId' element={<Listing />} />
             <Route path='/updateListing/:listingId' element={<UpdateListing />} />
 
           </Route>

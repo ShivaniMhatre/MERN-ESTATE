@@ -164,7 +164,7 @@ export default function UpdateListing() {
                 setError(data.message);
             }
             console.log(data);
-            // navigate(`/listing/${data._id}`);
+            navigate(`/listing/${data._id}`);
         } catch (error) {
             setError(error.message);
             setLoading(false);
@@ -299,7 +299,7 @@ export default function UpdateListing() {
                             <div className='flex flex-col items-center'>
                                 <p>Regular price</p>
                                 {formData.type === 'rent' && (
-                                    <span className='text-xs'>($ / month)</span>
+                                    <span className='text-xs'>(₹ / month)</span>
                                 )}
                             </div>
                         </div>
@@ -319,7 +319,7 @@ export default function UpdateListing() {
                                     <p>Discounted price</p>
 
                                     {formData.type === 'rent' && (
-                                        <span className='text-xs'>($ / month)</span>
+                                        <span className='text-xs'>(₹ / month)</span>
                                     )}
                                 </div>
                             </div>
