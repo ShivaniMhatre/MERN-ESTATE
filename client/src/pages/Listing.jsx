@@ -5,12 +5,17 @@ import SwiperCore from 'swiper'
 import { Navigation } from 'swiper/modules'
 import 'swiper/css/bundle'
 import { FaBath, FaBed, FaChair, FaMapMarkerAlt, FaParking, FaShare } from 'react-icons/fa'
+import { useSelector } from 'react-redux'
+import Contact from "../components/Contact"
 
 export default function Listing() {
+  const { currentUser } = useSelector((state) => state.user)
   const [listing, setListing] = useState(null);
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
   const [copied, setCopied] = useState(false);
+  const [contact, setContact] = useState(false)
+
   const params = useParams();
   SwiperCore.use([Navigation])
   useEffect(() => {
@@ -27,7 +32,7 @@ export default function Listing() {
         setListing(data);
         setLoading(false);
         setError(false);
-      } catch (error) {
+      } catch (err) {
         setError(true);
         setLoading(false);
       }
@@ -101,13 +106,22 @@ export default function Listing() {
               </li>
               <li className="flex items-center gap-1 whitespace-nowrap ">
                 <FaParking className="text-lg" />
-                {listing.parking ? 'Parking spot' :'No Parking' }
+                {listing.parking ? 'Parking spot' : 'No Parking'}
               </li>
               <li className="flex items-center gap-1 whitespace-nowrap ">
                 <FaChair className="text-lg" />
-                {listing.furnished  ? 'Furnished' : 'Unfurnished'}
+                {listing.furnished ? 'Furnished' : 'Unfurnished'}
               </li>
             </ul>
+            {currentUser && listing.userRef !== currentUser._id && !contact && (
+              <button
+                onClick={() => setContact(true)}
+                className='bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 p-3'
+              >
+                Contact landlord
+              </button>
+            )}
+            {contact && <Contact listing={listing} />}
           </div>
         </div>
         )}
