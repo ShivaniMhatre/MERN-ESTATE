@@ -16,11 +16,11 @@ export default function CreateListing() {
   const [formData, setFormData] = useState({
     imageUrls: [],
     name: '',
-    description: '',
+    desc: '',
     address: '',
     type: 'rent',
-    bedrooms: 1,
-    bathrooms: 1,
+    bedroom: 1,
+    bathroom: 1,
     regularPrice: 50,
     discountPrice: 0,
     offer: false,
@@ -126,22 +126,24 @@ export default function CreateListing() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      if (formData.imageUrls.length < 1)
+      if (formData.imageUrls.length < 1) {
         return setError('You must upload at least one image');
-      if (+formData.regularPrice < +formData.discountPrice)
-        return setError('Discount price must be lower than regular price');
+      }
+      if (+formData.regularPrice < +formData.discountPrice) {
+        return setError('Discount Price must be lower than Regulat Price')
+      }
       setLoading(true);
       setError(false);
-      const res = await fetch('/api/listing/createListing', {
+      const res = await fetch('/api/listing/newListing', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({
           ...formData,
-          userRef: currentUser._id,
+          userRef: currentUser._id
         }),
-      });
+      })
       const data = await res.json();
       setLoading(false);
       if (data.success === false) {
@@ -152,7 +154,7 @@ export default function CreateListing() {
       setError(error.message);
       setLoading(false);
     }
-  };
+  }
   return (
     <main className='p-3 max-w-4xl mx-auto'>
       <h1 className='text-3xl font-semibold text-center my-7'>
@@ -175,10 +177,10 @@ export default function CreateListing() {
             type='text'
             placeholder='Description'
             className='border p-3 rounded-lg'
-            id='description'
+            id='desc'
             required
             onChange={handleChange}
-            value={formData.description}
+            value={formData.desc}
           />
           <input
             type='text'
@@ -198,7 +200,7 @@ export default function CreateListing() {
                 onChange={handleChange}
                 checked={formData.type === 'sale'}
               />
-              <span>Sell</span>
+              <span>Sale</span>
             </div>
             <div className='flex gap-2'>
               <input
@@ -245,26 +247,26 @@ export default function CreateListing() {
             <div className='flex items-center gap-2'>
               <input
                 type='number'
-                id='bedrooms'
+                id='bedroom'
                 min='1'
                 max='10'
                 required
                 className='p-3 border border-gray-300 rounded-lg'
                 onChange={handleChange}
-                value={formData.bedrooms}
+                value={formData.bedroom}
               />
               <p>Beds</p>
             </div>
             <div className='flex items-center gap-2'>
               <input
                 type='number'
-                id='bathrooms'
+                id='bathroom'
                 min='1'
                 max='10'
                 required
                 className='p-3 border border-gray-300 rounded-lg'
                 onChange={handleChange}
-                value={formData.bathrooms}
+                value={formData.bathroom}
               />
               <p>Baths</p>
             </div>
